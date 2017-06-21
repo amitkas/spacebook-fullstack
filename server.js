@@ -15,10 +15,36 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
+
+// this is the first post and comment I added inside the DB
+
+// var secondPost = new Post ({
+//   text:'second post',
+//   comment:[]
+// });
+
+// secondPost.comments.push({ username: "dvir", text: "Great comment!" })
+
+// secondPost.save(function(err, data){
+//   if (err)  {return console.error(err)}
+//   console.log('saved!')
+// })
+
+
 // You will need to create 5 server routes
 // These will define your API:
 
 // 1) to handle getting all posts and their comments
+
+app.get('/posts', function (req, res) {
+Post.find(function (error, result){
+  if(error) { return console.error(error); }
+  console.log(result);
+  res.send(result)
+});
+});
+
+
 // 2) to handle adding a post
 // 3) to handle deleting a post
 // 4) to handle adding a comment to a post
