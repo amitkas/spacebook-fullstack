@@ -43,10 +43,12 @@ app.get('/posts', function (req, res) {
     if (error) {
       return console.error(error);
     }
-    console.log(result);
+    //console.log(result);
     res.send(result)
   });
 });
+
+// 2) to handle adding a post
 
 app.post('/posts', function (req, res) {
   // console.log(req.body);
@@ -61,32 +63,74 @@ app.post('/posts', function (req, res) {
 });
 
 
+// 3) to handle deleting a post
 
 
 app.delete('/posts/:id', function (req, res) {
-      var id = req.params.id;
-      Post.findById(id, function (err, res) {
-            if (err) {
-              throw err
-            }; {
-              res.remove(function (err, data) {
-                if (err) {
-                  throw err
-                }; {
-                  console.log('found and removed!')
-                }
-              })
-            }
+  var id = req.params.id;
+  Post.findById(id, function (err, res) {
+    if (err) {
+      throw err
+    }; {
+      res.remove(function (err, data) {
+        if (err) {
+          throw err
+        }; {
+          console.log('found and removed!')
+        }
       })
-      res.send()
+    }
+  })
+  res.send()
 })
 
 
-            // 2) to handle adding a post
-            // 3) to handle deleting a post
-            // 4) to handle adding a comment to a post
-            // 5) to handle deleting a comment from a post
+// 4) to handle adding a comment to a post
 
-            app.listen(8000, function () {
-              console.log("what do you want from me! get me on 8000 ;-)");
-            });
+
+
+app.post('/posts/:id/comments', function (req, res) {
+  var id = req.params.id;
+  Post.findById(id, function (err, here) {
+    if (err) {
+      throw err
+    } else {
+      here.comments.push(req.body)
+      here.save(function (err, data) {
+        if (err) {
+          console.error(err);
+        } else {
+          console.log(data)
+          res.send(data)
+        }
+      })
+
+    }
+  })
+
+})
+
+
+
+// 5) to handle deleting a comment from a post
+
+app.delete('/posts/:postid/comments/:commentid', function (req, res) {
+  var postid = req.params.postid;
+  var commentid = req.params.commentid
+  Post.findById(postid, function (err, data) {
+    if (err) {
+      throw err
+    }; {
+      data.comments.id(commentid).remove();
+      data.save()
+      res.send(data)
+    }
+  });
+
+});
+
+
+
+app.listen(8000, function () {
+  console.log("what do you want from me! get me on 8000 ;-)");
+});

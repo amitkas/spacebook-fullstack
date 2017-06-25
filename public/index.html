@@ -27,6 +27,9 @@
     <script id="post-template" type="text/x-handlebars-template">
         <div class="post" data-id="{{_id}}"> {{text}} <a class="toggle-comments" href="#"> Comments </a>
             <button type="button" class="btn btn-danger remove-post">Remove Post</button>
+            <button type="button" class="btn btn-info edit-post-btn">Edit Post</button><br>
+            <input class='edit-post-input' type='text' placeholder="edit here">
+            </input> 
             <div class="comments-container">
                 <ul class="comments-list"></ul>
                 <input class="form-control name" type="text" placeholder="Name" />
